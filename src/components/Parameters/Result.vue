@@ -1,5 +1,5 @@
 <template>
-    <div class="card bg-light mb-3" style="max-width: 300px; min-width: 200px; padding: 0px;">
+    <div class="card bg-light mb-3" style="max-width: 300px; min-width: 200px; padding: 0;">
         <div class="card-header">Result</div>
         <div class="card-body" style="padding: 0">
             <div class="list-group list-group-flush" >
@@ -35,15 +35,23 @@
         },
         mounted(){
             let budget = this.$store.getters.getBudget;
-            this.totalHours = budget.totalHours;
-            this.totalCost = budget.totalCost;
+            if(budget.totalHours != null){
+                this.totalHours = budget.totalHours;
+            }
+            if(budget.totalCost != null){
+                this.totalCost = budget.totalCost;
+            }
         },
         created(){
             this.$store.subscribe((mutation, state) => {
                 if (mutation.type === "updateBudget") {
-                    let budget = state.functionalitiesObject;
-                    this.totalHours = budget.totalHours;
-                    this.totalCost = budget.totalCost;
+                    let budget = state.budget.functionalitiesObject;
+                    if(budget.totalHours != null){
+                        this.totalHours = budget.totalHours;
+                    }
+                    if(budget.totalCost != null){
+                        this.totalCost = budget.totalCost;
+                    }
                 }
             });
         }

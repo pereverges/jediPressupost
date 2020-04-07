@@ -7,56 +7,58 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        functionalitiesObject: {
+        budget: {
+            functionalitiesObject: {
+            },
+            roles: [],
+            pointHour: 0,
+            hourError: 0.0,
+            hourManagement: 0.0,
             totalCost: 0,
             totalHours: 0,
-            functionalities: []
         },
-        roles: [],
-        pointHour: 0,
-        hourError: 0.0,
-        hourManagement: 0.0,
-        totalCost: 0,
-        totalHours: 0,
         lastRoleRemoved: null
 
     },
     getters: {
         getRoles: state => {
-            return state.roles;
+            return state.budget.roles;
         },
         getPointHour: state => {
-            return state.pointHour;
+            return state.budget.pointHour;
         },
         getHourError: state => {
-            return state.hourError;
+            return state.budget.hourError;
         },
         getHourManagement: state => {
-            return state.hourManagement
+            return state.budget.hourManagement
         },
         getBudget: state => {
-            return state.functionalitiesObject;
+            return state.budget.functionalitiesObject;
+        },
+        getAllData: state => {
+            return state.budget;
         }
     },
     mutations: {
         removeRole (state, index){
-            state.roles.splice(index,1);
+            state.budget.roles.splice(index,1);
             state.lastRoleRemoved = index;
         },
         updateRole (state, payload){
-            state.roles.splice(payload.index,1,payload.role);
+            state.budget.roles.splice(payload.index,1,payload.role);
         },
         setPointHour(state, pointHour){
-            state.pointHour = pointHour;
+            state.budget.pointHour = pointHour;
         },
         setHourError(state, hourError){
-            state.hourError = hourError;
+            state.budget.hourError = hourError;
         },
         setHourManagement(state, hourManagement){
-            state.hourManagement = hourManagement
+            state.budget.hourManagement = hourManagement
         },
         updateBudget(state, functionalitiesObject){
-            state.functionalitiesObject = functionalitiesObject;
+            state.budget.functionalitiesObject = functionalitiesObject;
         }
     },
     actions: {}

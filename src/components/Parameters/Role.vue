@@ -37,7 +37,7 @@
         },
         methods: {
             removeRole(){
-                this.$emit('remove', this.id);
+                this.$emit('remove', this.index);
                 this.$store.commit('removeRole', this.index);
             },
             addRole(){
@@ -45,7 +45,7 @@
                     let payload = {'index': this.index, 'role': this.role};
                     this.$store.commit("updateRole", payload);
                 } else {
-                    this.$emit('remove', this.id);
+                    this.$emit('remove', this.index);
                     this.$store.commit("removeRole", this.index);
                 }
             }

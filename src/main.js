@@ -3,12 +3,13 @@ import App from './App.vue'
 import { library } from '@fortawesome/fontawesome-svg-core'
 import { faMinus, faPlus } from '@fortawesome/free-solid-svg-icons'
 import { FontAwesomeIcon } from '@fortawesome/vue-fontawesome'
+import JsonCSV from 'vue-json-csv'
 import store from "./store"
 
 library.add(faPlus, faMinus);
 
 Vue.component('font-awesome-icon', FontAwesomeIcon);
-
+Vue.component('downloadCsv', JsonCSV);
 
 Vue.config.productionTip = false;
 

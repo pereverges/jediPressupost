@@ -100,21 +100,21 @@
         created(){
             this.$store.subscribe((mutation, state) => {
                 if(mutation.type === "setPointHour"){
-                    if(state.pointHour != null){
-                        this.pointHour = state.pointHour;
+                    if(state.budget.pointHour != null){
+                        this.pointHour = state.budget.pointHour;
                         this.updateHours();
                     }
                 } else if(mutation.type === "setHourError"){
-                   if(state.hourError != null){
-                       this.hourError = state.hourError;
+                   if(state.budget.hourError != null){
+                       this.hourError = state.budget.hourError;
                        this.updateHours();
                    }
                 } else if(mutation.type === "setHourManagement"){
-                    this.hourManagement = state.hourManagement;
+                    this.hourManagement = state.budget.hourManagement;
                     this.updateHours();
                 } else if(mutation.type === "updateRole"){
-                    if(state.roles != null){
-                        this.roles = state.roles;
+                    if(state.budget.roles != null){
+                        this.roles = state.budget.roles;
                     } else{
                         this.roles = [];
                     }

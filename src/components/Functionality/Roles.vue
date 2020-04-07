@@ -1,9 +1,19 @@
 <template>
     <div class="d-flex flex-row">
-        <div v-for="(role, index) in this.roles" :key="index" style="margin-right: 8px">
-            <label v-if="!first">{{role.name}}</label>
-            <input type="number" size="2" class="form-control" min="0" max="1" placeholder="0" @change="updateRoleObject"
-                   v-model="rolesObject[index].number" value="rolesObject[index].number">
+        <div v-for="(role, index) in this.roles" :key="index">
+            <div class="d-flex flex-row">
+                <div class="marginLeft">
+                    <label v-if="!first">{{role.name}}</label>
+                    <input type="number" size="2" class="form-control" min="0" max="1" placeholder="0" @change="updateRoleObject"
+                           v-model="rolesObject[index].number" value="rolesObject[index].number">
+                </div>
+                <div class="marginLeft">
+                    <label v-if="!first">Weight</label>
+                    <input type="number" size="2" class="form-control" min="0" max="99" placeholder="0" @change="updateRoleObject"
+                        v-model="rolesObject[index].weight" value="rolesObject[index].weight">
+                </div>
+            </div>
+
         </div>
     </div>
 </template>
@@ -22,9 +32,21 @@
             updateRoleObject(){
                 let costHour = 0;
                 if (this.roles.length === this.rolesObject.length){
+                    let j;
+                    let totalWeights = 0;
+                    for(j=0; j < this.rolesObject.length; ++j){
+                        if(this.rolesObject[j].number !== 0){
+                            totalWeights += parseInt(this.rolesObject[j].weight);
+                        }
+                    }
+                    if(totalWeights === 0){
+                        totalWeights = 1;
+                    }
                     let i;
-                    for(i = 0; i < this.roles.length; ++i){
-                        costHour += this.roles[i].price*this.rolesObject[i].number;
+                    for(i = 0; i < this.rolesObject.length; ++i){
+                        console.log("Role", this.rolesObject[i].weight);
+                        console.log("TotalWeight", totalWeights);
+                        costHour += this.roles[i].price*this.rolesObject[i].number*(this.rolesObject[i].weight/totalWeights);
                     }
                 }
                 this.$emit('updateRolesObject', {'roles': this.rolesObject, 'costHour': costHour});
@@ -37,21 +59,23 @@
                 this.rolesObject.push({
                     name: this.roles[i].name,
                     index: i,
-                    number: 0
+                    number: 0,
+                    weight: 0
                 })
             }
         },
         created(){
             this.$store.subscribe((mutation, state) => {
                 if(mutation.type === "updateRole"){
-                    if(state.roles != null){
-                        this.roles = state.roles;
+                    if(state.budget.roles != null){
+                        this.roles = state.budget.roles;
                         if(this.roles.length > this.rolesObject.length){
                             let index = this.rolesObject.length;
                             this.rolesObject.push({
                                 name: this.roles[index].name,
                                 index: index,
-                                number: 0
+                                number: 0,
+                                weight: 0
                             });
                         }
                         this.updateRoleObject();
@@ -60,7 +84,7 @@
                     }
                 } else if(mutation.type === "removeRole"){
                     if(state.lastRoleRemoved != null){
-                        this.roles = state.roles;
+                        this.roles = state.budget.roles;
                         this.rolesObject.splice(state.lastRoleRemoved, 1);
                         this.updateRoleObject();
                     }
@@ -71,4 +95,7 @@
 </script>
 
 <style scoped>
+.marginLeft{
+    margin-left: 8px
+}
 </style>
