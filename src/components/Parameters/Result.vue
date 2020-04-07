@@ -8,7 +8,7 @@
                         <label>Total cost</label>
                     </div>
                     <div style="margin-left: 12px">
-                        <p style="margin: 6px">{{cost}}</p>
+                        <p style="margin: 6px">{{totalCost}}</p>
                     </div>
                 </div>
                 <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
@@ -16,7 +16,7 @@
                         <label>Total hours</label>
                     </div>
                     <div style="margin-left: 12px">
-                        <p style="margin: 6px">{{hours}}</p>
+                        <p style="margin: 6px">{{totalHours}}</p>
                     </div>
                 </div>
             </div>
@@ -27,7 +27,26 @@
 <script>
     export default {
         name: "Result",
-        props: ["cost", "hours"]
+        data(){
+            return{
+                totalHours: 0,
+                totalCost: 0
+            }
+        },
+        mounted(){
+            let budget = this.$store.getters.getBudget;
+            this.totalHours = budget.totalHours;
+            this.totalCost = budget.totalCost;
+        },
+        created(){
+            this.$store.subscribe((mutation, state) => {
+                if (mutation.type === "updateBudget") {
+                    let budget = state.functionalitiesObject;
+                    this.totalHours = budget.totalHours;
+                    this.totalCost = budget.totalCost;
+                }
+            });
+        }
     }
 </script>
 

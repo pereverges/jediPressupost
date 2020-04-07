@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Functionality v-for="(functionality, index) in functionalities" :key="functionality.id" :index="index" @cost="updateCost" @hours="updateHours" @remove="removeFunctionality"/>
+        <Functionality v-for="(functionality, index) in functionalities" :key="functionality.id" :index="index" @functionality="updateFunctionality" @remove="removeFunctionality"/>
         <div>
             <button type="button" class="btn btn-outline-primary float-left add-button" @click="addFunctionality">
                 <font-awesome-icon  icon="plus"/>
@@ -18,49 +18,61 @@
         },
         data(){
             return{
+                functionalitiesObject: {
+                    totalCost: 0,
+                    totalHours: 0,
+                    functionalities: []
+                },
                 functionalities: [],
                 count: 0,
-                cost: 0,
-                hours: 0
             }
         },
         methods: {
+            updateFunctionality(functionality) {
+                this.functionalitiesObject.functionalities[functionality.index] = functionality;
+                this.newCostCompute();
+                this.newHoursCompute();
+            },
             addFunctionality(){
-                this.functionalities.push({cost: "0", hours: "0", id: this.count});
+                let i = this.functionalitiesObject.length;
+                this.functionalitiesObject.functionalities.push({
+                    name: "",
+                    index: i,
+                    cost: 0,
+                    hours: 0,
+                    tasks: []
+                });
+                this.functionalities.push({id: this.count});
                 this.count += 1;
             },
             removeFunctionality(index) {
+                this.functionalitiesObject.functionalities.splice(index,1);
                 this.functionalities.splice(index,1);
                 this.newCostCompute();
                 this.newHoursCompute();
-
-            },
-            updateCost(functionality){
-                this.functionalities[functionality.index].cost = functionality.cost;
-                this.newCostCompute();
-            },
-            updateHours(functionality){
-                this.functionalities[functionality.index].hours = functionality.hours;
-                this.newHoursCompute();
-
             },
             newHoursCompute(){
-                this.hours = 0;
+                this.functionalitiesObject.totalHours = 0;
                 let i;
-                for (i = 0; i < this.functionalities.length; i++){
-                    this.hours += this.functionalities[i].hours;
+                for (i = 0; i < this.functionalitiesObject.functionalities.length; i++){
+                    this.functionalitiesObject.totalHours += this.functionalitiesObject.functionalities[i].hours;
                 }
-                this.hours = Math.round((this.hours + Number.EPSILON)*100)/100;
-                this.$emit('hours', this.hours);
+                this.functionalitiesObject.totalHours = Math.round((this.functionalitiesObject.totalHours + Number.EPSILON)*100)/100;
+
+                this.updateFunctionalitiesObject();
             },
             newCostCompute(){
-                this.cost = 0;
+                this.functionalitiesObject.totalCost = 0;
                 let i;
-                for (i = 0; i < this.functionalities.length; i++){
-                    this.cost += this.functionalities[i].cost;
+                for (i = 0; i < this.functionalitiesObject.functionalities.length; i++){
+                    this.functionalitiesObject.totalCost += this.functionalitiesObject.functionalities[i].cost;
                 }
-                this.cost = Math.round((this.cost + Number.EPSILON)*100)/100;
-                this.$emit('cost', this.cost);
+                this.functionalitiesObject.totalCost = Math.round((this.functionalitiesObject.totalCost + Number.EPSILON)*100)/100;
+
+                this.updateFunctionalitiesObject()
+            },
+            updateFunctionalitiesObject(){
+                this.$store.commit("updateBudget", this.functionalitiesObject);
             }
         }
     }

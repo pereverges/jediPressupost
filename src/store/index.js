@@ -7,11 +7,18 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
+        functionalitiesObject: {
+            totalCost: 0,
+            totalHours: 0,
+            functionalities: []
+        },
         roles: [],
         pointHour: 0,
         hourError: 0.0,
         hourManagement: 0.0,
-        lastRemoved: null
+        totalCost: 0,
+        totalHours: 0,
+        lastRoleRemoved: null
 
     },
     getters: {
@@ -26,12 +33,15 @@ export default new Vuex.Store({
         },
         getHourManagement: state => {
             return state.hourManagement
+        },
+        getBudget: state => {
+            return state.functionalitiesObject;
         }
     },
     mutations: {
         removeRole (state, index){
             state.roles.splice(index,1);
-            state.lastRemoved = index;
+            state.lastRoleRemoved = index;
         },
         updateRole (state, payload){
             state.roles.splice(payload.index,1,payload.role);
@@ -44,6 +54,9 @@ export default new Vuex.Store({
         },
         setHourManagement(state, hourManagement){
             state.hourManagement = hourManagement
+        },
+        updateBudget(state, functionalitiesObject){
+            state.functionalitiesObject = functionalitiesObject;
         }
     },
     actions: {}

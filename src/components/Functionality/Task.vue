@@ -9,25 +9,25 @@
 
             <div class="flex-grow-1 margin">
                 <label v-if="!index" style="float: left; margin-left: 4px">Tasks</label>
-                <input type="text" class="form-control" placeholder="Task"/>
+                <input type="text" class="form-control" placeholder="Task" v-model="task.name" value="task.name" @change="updateTask"/>
             </div>
             <div class="margin" >
                 <label v-if="!index">Points</label>
-                <input type="number" size="2" class="form-control" min="0" max="21" placeholder="1" v-model="point" @change="updateHours">
+                <input type="number" size="2" class="form-control" min="0" max="21" placeholder="1" v-model="task.point" @change="updateHours">
             </div>
             <div class="margin">
                 <label v-if="!index">Hours</label>
                 <p style="margin-left: 12px; margin-right: 12px; margin-top: 7px">
-                    {{hours}}
+                    {{task.hours}}
                 </p>
             </div>
             <div>
-                <Roles class="margin" :first="index" @updateNumberRole="updateNumberRole"/>
+                <Roles class="margin" :first="index" @updateRolesObject="updateRolesObject"/>
             </div>
             <div class="margin">
                 <label v-if="!index">Cost</label>
                 <p style="margin-left: 12px; margin-right: 12px; margin-top: 7px">
-                    {{cost}}
+                    {{task.cost}}
                 </p>
             </div>
         </div>
@@ -44,30 +44,51 @@
         },
         data(){
             return{
+                task: {
+                    name: "",
+                    index: this.index,
+                    point: 0,
+                    hours: 0,
+                    cost: 0,
+                    roles: []
+                },
+
                 roles: [],
                 pointHour: 0,
-                point: 0,
-                hourError: 0.0,
-                hourManagement: 0.0,
-                cost: 0
+                hourError: 0,
+                hourManagement: 0,
+                costHour: 0
             }
         },
         methods: {
             removeTask(){
                 this.$emit('remove', this.index);
             },
-            updateNumberRole(costHour) {
-                this.cost = Math.round((costHour*this.hours + Number.EPSILON)*100)/100;
-                this.$emit('cost', {'index': this.index, 'cost': this.cost});
+            updateRolesObject(parameters) {
+                this.task.roles = parameters.roles;
+                this.costHour = parameters.costHour;
+
+                this.task.cost = Math.round((this.costHour*this.task.hours + Number.EPSILON)*100)/100;
+
+                this.updateTask();
             },
             updateHours(){
-                this.$emit('hours', {'index': this.index, 'hours': this.hours});
+                let h = this.task.point * this.pointHour;
+
+                this.task.hours = Math.round(((h + (h * this.hourError) + (h * this.hourManagement)) + Number.EPSILON)*100)/100;
+                if(this.task.hours != null){
+                    this.task.cost = Math.round((this.costHour*this.task.hours + Number.EPSILON)*100)/100;
+                }
+
+                this.updateTask();
+            },
+            updateTask(){
+                this.$emit('task', this.task);
             }
         },
-        computed: {
-            hours: function(){
-                let h = this.point * this.pointHour;
-                return Math.round(((h + (h * this.hourError) + (h * this.hourManagement)) + Number.EPSILON)*100)/100;
+        watch: {
+            index: function (newVal) {
+                this.task.index = newVal;
             }
         },
         mounted(){
