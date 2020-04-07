@@ -1,0 +1,61 @@
+<template>
+    <div class="card bg-light mb-3" style="max-width: 280px; min-width: 280px; padding: 0px">
+        <div class="card-header">Parameters</div>
+        <div class="card-body" style="padding: 0px">
+            <div class="list-group list-group-flush" >
+                <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
+                    <div style="margin-top: 6px;">
+                        <label>Point/Hour</label>
+                    </div>
+                    <div style="margin-left: 12px">
+                        <input type="number" size="5" step="0.05" class="form-control" min="0" max="99" v-model="pointHour" value="pointHour" @change="setPointHour">
+                    </div>
+                </div>
+                <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
+                    <div style="margin-top: 6px;">
+                        <label>Hour/Error</label>
+                    </div>
+                    <div style="margin-left: 12px">
+                        <input type="number" size="5" step="0.05" class="form-control" min="0" max="99" v-model="hourError" value="hourError" @change="setHourError">
+                    </div>
+                </div>
+                <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
+                    <div style="margin-top: 6px;">
+                        <label>Hour/Management</label>
+                    </div>
+                    <div style="margin-left: 12px;" class="float-right">
+                        <input type="number" size="5" step="0.025" class="form-control" min="0" max="99" v-model="hourManagement" value="hourManagement" @change="setHourManagement">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</template>
+
+<script>
+    export default {
+        name: "Parameters",
+        data(){
+            return{
+                pointHour: 0,
+                hourError: 0.0,
+                hourManagement: 0.0,
+            }
+        },
+        methods: {
+            setPointHour() {
+                this.$store.commit("setPointHour", this.pointHour);
+            },
+            setHourError(){
+                this.$store.commit("setHourError", this.hourError);
+            },
+            setHourManagement(){
+                this.$store.commit("setHourManagement", this.hourManagement);
+            }
+        }
+    }
+</script>
+
+<style scoped>
+
+</style>
