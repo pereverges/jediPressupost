@@ -1,6 +1,6 @@
 <template>
     <div>
-        <Functionality v-for="(functionality, index) in functionalities" :key="functionality.id" :index="index" @functionality="updateFunctionality" @remove="removeFunctionality"/>
+        <Functionality v-for="(functionality, index) in functionalitiesObject.functionalities" :key="functionality.id" :functionality="functionality" :findex="index" @functionality="updateFunctionality" @remove="removeFunctionality"/>
         <div>
             <button type="button" class="btn btn-outline-primary float-left add-button" @click="addFunctionality">
                 <font-awesome-icon  icon="plus"/>
@@ -21,10 +21,9 @@
                 functionalitiesObject: {
                     totalCost: 0,
                     totalHours: 0,
-                    functionalities: []
-                },
-                functionalities: [],
-                count: 0,
+                    functionalities: [],
+                    count: 0
+                }
             }
         },
         methods: {
@@ -38,16 +37,16 @@
                 this.functionalitiesObject.functionalities.push({
                     name: "",
                     index: i,
+                    id: this.functionalitiesObject.count,
                     cost: 0,
                     hours: 0,
-                    tasks: []
+                    tasks: [],
+                    count: 0
                 });
-                this.functionalities.push({id: this.count});
-                this.count += 1;
+                this.functionalitiesObject.count += 1;
             },
             removeFunctionality(index) {
                 this.functionalitiesObject.functionalities.splice(index,1);
-                this.functionalities.splice(index,1);
                 this.newCostCompute();
                 this.newHoursCompute();
             },
@@ -74,6 +73,14 @@
             updateFunctionalitiesObject(){
                 this.$store.commit("updateBudget", this.functionalitiesObject);
             }
+        },
+        created(){
+            this.$store.subscribe((mutation, state) => {
+                if (mutation.type === "uploadNewBudget") {
+                    this.functionalitiesObject = null;
+                    this.functionalitiesObject = state.budget.functionalitiesObject;
+                }
+            });
         }
     }
 </script>

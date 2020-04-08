@@ -22,7 +22,7 @@
                 </p>
             </div>
             <div>
-                <Roles class="margin" :first="index" @updateRolesObject="updateRolesObject"/>
+                <Roles class="margin" :tindex="index" :findex="this.findex" @updateRolesObject="updateRolesObject"/>
             </div>
             <div class="margin">
                 <label v-if="!index">Cost</label>
@@ -37,22 +37,13 @@
 <script>
     import Roles from "@/components/Functionality/Roles";
     export default {
-        props: ["index"],
+        props: ["index","findex","task"],
         name: "Task",
         components:{
             Roles
         },
         data(){
             return{
-                task: {
-                    name: "",
-                    index: this.index,
-                    point: 0,
-                    hours: 0,
-                    cost: 0,
-                    roles: []
-                },
-
                 roles: [],
                 pointHour: 0,
                 hourError: 0,
@@ -112,7 +103,7 @@
                 } else if(mutation.type === "setHourManagement"){
                     this.hourManagement = state.budget.hourManagement;
                     this.updateHours();
-                } else if(mutation.type === "updateRole"){
+                } else if(mutation.type === "updateRole" || mutation.type === "uploadNewBudget"){
                     if(state.budget.roles != null){
                         this.roles = state.budget.roles;
                     } else{

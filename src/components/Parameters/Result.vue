@@ -44,7 +44,7 @@
         },
         created(){
             this.$store.subscribe((mutation, state) => {
-                if (mutation.type === "updateBudget") {
+                if (mutation.type === "updateBudget" || mutation.type === "uploadNewBudget") {
                     let budget = state.budget.functionalitiesObject;
                     if(budget.totalHours != null){
                         this.totalHours = budget.totalHours;

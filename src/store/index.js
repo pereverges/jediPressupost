@@ -10,19 +10,20 @@ export default new Vuex.Store({
         budget: {
             functionalitiesObject: {
             },
-            roles: [],
+            rolesObject: {
+            },
             pointHour: 0,
             hourError: 0.0,
             hourManagement: 0.0,
             totalCost: 0,
             totalHours: 0,
+            lastRoleRemoved: null
         },
-        lastRoleRemoved: null
 
     },
     getters: {
         getRoles: state => {
-            return state.budget.roles;
+            return state.budget.rolesObject.roles;
         },
         getPointHour: state => {
             return state.budget.pointHour;
@@ -38,15 +39,18 @@ export default new Vuex.Store({
         },
         getAllData: state => {
             return state.budget;
-        }
+        },
     },
     mutations: {
         removeRole (state, index){
-            state.budget.roles.splice(index,1);
-            state.lastRoleRemoved = index;
+            state.budget.rolesObject.roles.splice(index,1);
+            state.budget.lastRoleRemoved = index;
         },
         updateRole (state, payload){
-            state.budget.roles.splice(payload.index,1,payload.role);
+            state.budget.rolesObject.roles.splice(payload.index,1,payload.role);
+        },
+        updateRoleObject(state, rolesObject) {
+            state.budget.rolesObject = rolesObject;
         },
         setPointHour(state, pointHour){
             state.budget.pointHour = pointHour;
@@ -59,6 +63,9 @@ export default new Vuex.Store({
         },
         updateBudget(state, functionalitiesObject){
             state.budget.functionalitiesObject = functionalitiesObject;
+        },
+        uploadNewBudget(state, budget){
+            state.budget = budget;
         }
     },
     actions: {}

@@ -51,7 +51,24 @@
             },
             setHourManagement(){
                 this.$store.commit("setHourManagement", this.hourManagement);
+            },
+            updateParameters(){
+                this.setPointHour();
+                this.setHourError();
+                this.setHourManagement();
             }
+        },
+        created(){
+            this.$store.subscribe((mutation, state) => {
+                if (mutation.type === "uploadNewBudget") {
+                    if (state.budget != null) {
+                        this.pointHour = state.budget.pointHour;
+                        this.hourError = state.budget.hourError;
+                        this.hourManagement = state.budget.hourManagement;
+                        this.updateParameters();
+                    }
+                }
+            });
         }
     }
 </script>

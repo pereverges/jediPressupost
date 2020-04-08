@@ -9,6 +9,7 @@
     </div>
     <div class="d-flex flex-row">
       <button class="btn btn-primary" style="margin-left: 52px; margin-top: 8px" @click="saveData">Save</button>
+      <input type="file" class="btn btn-primary"  style="margin-left: 12px; margin-top: 8px" @change="loadBudget">
     </div>
   </div>
 </template>
@@ -45,6 +46,13 @@ export default {
       document.body.appendChild(downloadAnchorNode); // required for firefox
       downloadAnchorNode.click();
       downloadAnchorNode.remove();
+    },
+    loadBudget(event){
+      const file = event.target.files[0];
+      const reader = new FileReader();
+
+      reader.onload = ev => this.$store.commit('uploadNewBudget',  JSON.parse(ev.target.result));
+      reader.readAsText(file);
     }
   }
 }

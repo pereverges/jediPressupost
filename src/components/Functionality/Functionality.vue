@@ -2,17 +2,17 @@
     <div>
         <div class="d-flex flex-row">
             <div class="margin">
-                <button type="button" class="btn btn-outline-primary"  v-bind:class="{'marginFirst' : !index}" @click="removeFunctionality">
+                <button type="button" class="btn btn-outline-primary"  v-bind:class="{'marginFirst' : !findex}" @click="removeFunctionality">
                     <font-awesome-icon  icon="minus" />
                 </button>
             </div>
             <div class="flex-grow-1 margin">
-                <label v-if="!index" style="float: left; margin-left: 4px">Functionalities</label>
+                <label v-if="!findex" style="float: left; margin-left: 4px">Functionalities</label>
                 <input type="text" class="form-control " placeholder="Functionality"
                        v-model="functionality.name" value="functionality.name" @change="updateFunctionality"/>
             </div>
             <div>
-                <label v-if="!index">Cost</label>
+                <label v-if="!findex">Cost</label>
                 <p style="margin-left: 12px; margin-right: 12px; margin-top: 8px">
                     {{functionality.cost}}
                 </p>
@@ -20,7 +20,7 @@
         </div>
 
         <div class="taskHolder">
-            <Task v-for="(task, index) in tasks" :key="task.id" :index="index" @task="updateTask" @remove="removeTask"/>
+            <Task v-for="(task, index) in functionality.tasks" :key="task.id" :findex="findex" :index="index" :task="task" @task="updateTask" @remove="removeTask"/>
             <div>
                 <button type="button" class="btn btn-outline-success float-left add-button" @click="addTask">
                     <font-awesome-icon  icon="plus"/>
@@ -34,23 +34,13 @@
 <script>
     import Task from "@/components/Functionality/Task";
     export default {
-        props: ["index"],
+        props: ["findex", "functionality"],
         name: "Functionality",
         components: {
             Task
         },
         data(){
             return{
-                functionality: {
-                    name: "",
-                    index: this.index,
-                    cost: 0,
-                    hours: 0,
-                    tasks: []
-                },
-
-                tasks: [],
-                count: 0,
             }
         },
         methods: {
@@ -60,24 +50,23 @@
                 this.newHoursCompute();
             },
             removeFunctionality(){
-                this.$emit('remove', this.index);
+                this.$emit('remove', this.findex);
             },
             addTask(){
                 let i = this.functionality.tasks.length;
                 this.functionality.tasks.push({
                     name: "",
                     index: i,
+                    id: this.functionality.count,
                     point: 0,
                     hours: 0,
                     cost: 0,
-                    roles: []
+                    roles: [],
                 });
-                this.tasks.push({id: this.count});
-                this.count += 1;
+                this.functionality.count += 1;
             },
             removeTask(index) {
                 this.functionality.tasks.splice(index, 1);
-                this.tasks.splice(index,1);
                 this.newCostCompute();
                 this.newHoursCompute();
             },
@@ -106,7 +95,7 @@
             }
         },
         watch: {
-            index: function (newVal) {
+            findex: function (newVal) {
                 this.functionality.index = newVal;
             }
         }

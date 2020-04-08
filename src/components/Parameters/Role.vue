@@ -25,20 +25,15 @@
 
 <script>
     export default {
-        props: ["index","id"],
+        props: ["index","role"],
         name: "Role",
         data(){
             return{
-                role: {
-                    name: "",
-                    price: 0
-                }
             }
         },
         methods: {
             removeRole(){
-                this.$emit('remove', this.index);
-                this.$store.commit('removeRole', this.index);
+                this.$store.commit("removeRole", this.index);
             },
             addRole(){
                 if(this.role.name.length !== 0){
