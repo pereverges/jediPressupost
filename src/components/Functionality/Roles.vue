@@ -2,13 +2,8 @@
     <div class="d-flex flex-row">
         <div v-for="(role, index) in this.roles" :key="index">
             <div class="d-flex flex-row">
-                <div class="marginLeft">
-                    <label v-if="!tindex" v-bind:class="{'marginFirst' : !role.name.length}">{{role.name}}</label>
-                    <input type="number" size="2" class="form-control" min="0" max="1" placeholder="0" @change="updateRoleObject"
-                           v-model="rolesObject[index].number" value="rolesObject[index].number">
-                </div>
-                <div class="marginLeft">
-                    <label v-if="!tindex">Weight</label>
+                <div class="marginLeft input_width">
+                    <label class="input_width" v-if="!tindex" v-bind:class="{'marginFirst' : !role.name.length}">{{role.name}}</label>
                     <input type="number" size="2" class="form-control" min="0" max="99" placeholder="0" @change="updateRoleObject"
                         v-model="rolesObject[index].weight" value="rolesObject[index].weight">
                 </div>
@@ -19,9 +14,13 @@
 </template>
 
 <script>
+    import ResizeText from 'vue-resize-text'
     export default {
         name: "Roles",
         props: ["tindex","findex"],
+        directives: {
+            ResizeText
+        },
         data(){
             return{
                 roles: [],
@@ -35,16 +34,14 @@
                     let j;
                     let totalWeights = 0;
                     for(j=0; j < this.rolesObject.length; ++j){
-                        if(this.rolesObject[j].number !== 0){
-                            totalWeights += parseInt(this.rolesObject[j].weight);
-                        }
+                        totalWeights += parseInt(this.rolesObject[j].weight);
                     }
                     if(totalWeights === 0){
                         totalWeights = 1;
                     }
                     let i;
                     for(i = 0; i < this.rolesObject.length; ++i){
-                        costHour += this.roles[i].price*this.rolesObject[i].number*(this.rolesObject[i].weight/totalWeights);
+                        costHour += this.roles[i].price*(this.rolesObject[i].weight/totalWeights);
                     }
                 }
                 this.$emit('updateRolesObject', {'roles': this.rolesObject, 'costHour': costHour});
@@ -69,7 +66,6 @@
                 this.rolesObject.push({
                     name: this.roles[i].name,
                     index: i,
-                    number: 0,
                     weight: 0
                 })
             }
@@ -85,7 +81,6 @@
                             this.rolesObject.push({
                                 name: this.roles[index].name,
                                 index: index,
-                                number: 0,
                                 weight: 0
                             });
                         }
@@ -121,6 +116,11 @@
 
     .marginFirst{
         margin-top: 19px
+    }
+
+    .input_width{
+        max-width: 60px;
+        min-width: 60px;
     }
 
 </style>

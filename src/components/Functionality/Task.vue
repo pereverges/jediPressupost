@@ -7,15 +7,15 @@
                 </button>
             </div>
 
-            <div class="flex-grow-1 margin">
+            <div class="flex-grow-1 margin" style="min-width: 250px;">
                 <label v-if="!index" style="float: left; margin-left: 4px">Tasks</label>
                 <input type="text" class="form-control" placeholder="Task" v-model="task.name" value="task.name" @change="updateTask"/>
             </div>
-            <div class="margin" >
+            <div class="margin" style="max-width: 64px; min-width: 64px" >
                 <label v-if="!index">Points</label>
                 <input type="number" size="2" class="form-control" min="0" max="21" placeholder="1" v-model="task.point" @change="updateHours">
             </div>
-            <div class="margin">
+            <div class="margin" style="max-width: 50px; min-width: 50px">
                 <label v-if="!index">Hours</label>
                 <p style="margin-left: 12px; margin-right: 12px; margin-top: 7px">
                     {{task.hours}}
@@ -24,7 +24,7 @@
             <div>
                 <Roles class="margin" :tindex="index" :findex="this.findex" @updateRolesObject="updateRolesObject"/>
             </div>
-            <div class="margin">
+            <div class="margin" style="max-width: 80px; min-width: 80px">
                 <label v-if="!index">Cost</label>
                 <p style="margin-left: 12px; margin-right: 12px; margin-top: 7px">
                     {{task.cost}}

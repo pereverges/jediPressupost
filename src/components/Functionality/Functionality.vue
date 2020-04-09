@@ -11,7 +11,7 @@
                 <input type="text" class="form-control " placeholder="Functionality"
                        v-model="functionality.name" value="functionality.name" @change="updateFunctionality"/>
             </div>
-            <div>
+            <div style="max-width: 90px; min-width: 90px">
                 <label v-if="!findex">Cost</label>
                 <p style="margin-left: 12px; margin-right: 12px; margin-top: 8px">
                     {{functionality.cost}}

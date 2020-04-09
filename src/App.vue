@@ -8,8 +8,11 @@
       <Result class="align-self-start" style="margin-top: 100px; margin-left: 12px"/>
     </div>
     <div class="d-flex flex-row">
-      <button class="btn btn-primary" style="margin-left: 52px; margin-top: 8px" @click="saveData">Save</button>
-      <input type="file" class="btn btn-primary"  style="margin-left: 12px; margin-top: 8px" @change="loadBudget">
+      <button class="btn btn-outline-primary" style="margin-left: 52px; margin-top: 8px" @click="saveData">Save</button>
+      <div class="custom-file" style="max-width: 170px; margin-top: 8px; margin-left: 12px">
+        <input type="file" class="custom-file-input"  style="margin-top: 8px" @change="loadBudget">
+        <label class="custom-file-label" style="margin-right: -70px; padding-left: 0">Select file</label>
+      </div>
     </div>
   </div>
 </template>
