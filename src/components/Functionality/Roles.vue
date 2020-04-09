@@ -1,14 +1,13 @@
 <template>
-    <div class="d-flex flex-row">
-        <div v-for="(role, index) in this.roles" :key="index">
-            <div class="d-flex flex-row">
-                <div class="marginLeft input_width">
-                    <label class="input_width" v-if="!tindex" v-bind:class="{'marginFirst' : !role.name.length}">{{role.name}}</label>
+    <div class="container">
+        <div class="row">
+            <div v-for="(role, index) in this.roles" class="col-md-auto" style="padding-left: 4px; padding-right: 4px" :key="index">
+                <div class="marginLeft input_width text-wrap" style="padding-bottom: 2px">
+                    <label class="input_width text-wrap" style="overflow: hidden; font-size: 12px; padding-top: 2px;" v-if="!tindex" v-bind:class="{'marginFirst' : !role.name.length}">{{role.name}}</label>
                     <input type="number" size="2" class="form-control" min="0" max="99" placeholder="0" @change="updateRoleObject"
-                        v-model="rolesObject[index].weight" value="rolesObject[index].weight">
+                           v-model="rolesObject[index].weight" value="rolesObject[index].weight">
                 </div>
             </div>
-
         </div>
     </div>
 </template>
@@ -83,6 +82,11 @@
                                 index: index,
                                 weight: 0
                             });
+                        } else {
+                            let i;
+                            for(i = 0; i < this.roles.length; i++){
+                                this.rolesObject[i].name = this.roles[i].name;
+                            }
                         }
                         this.updateRoleObject();
                     } else {
@@ -110,12 +114,8 @@
 </script>
 
 <style scoped>
-    .marginLeft{
-        margin-left: 8px
-    }
-
     .marginFirst{
-        margin-top: 19px
+        margin-top: 18px
     }
 
     .input_width{

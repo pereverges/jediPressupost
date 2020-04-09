@@ -1,17 +1,23 @@
 <template>
-  <div id="app">
+  <div id="app" style="min-width: 650px">
     <Header msg="Welcome to Your Vue.js App"/>
-    <FunctionalityHolder/>
-    <div class="d-flex flex-row">
-      <Parameters class="align-self-start" style="margin-top: 100px; margin-left: 4px"/>
-      <Roles  class="align-self-start" style="margin-top: 100px; margin-left: 12px"/>
-      <Result class="align-self-start" style="margin-top: 100px; margin-left: 12px"/>
+    <div style="float: left; width: 100%;  margin-left: 18px;">
+      <FunctionalityHolder/>
     </div>
-    <div class="d-flex flex-row">
-      <button class="btn btn-outline-primary" style="margin-left: 52px; margin-top: 8px" @click="saveData">Save</button>
-      <div class="custom-file" style="max-width: 170px; margin-top: 8px; margin-left: 12px">
-        <input type="file" class="custom-file-input"  style="margin-top: 8px" @change="loadBudget">
-        <label class="custom-file-label" style="margin-right: -70px; padding-left: 0">Select file</label>
+    <div class="container" style="float: left; margin-top:30px; margin-left: 22px;">
+      <div class="row">
+        <Parameters class="align-self-start col-md-auto"  style="margin-right: 12px"/>
+        <Roles  class="align-self-start col-md-auto" style="margin-right: 12px"/>
+        <Result class="align-self-start col-md-auto" style="margin-right: 12px"/>
+        <div class="col-md-auto align-self-start" style="margin-right: -4px; padding-left: 0; margin-bottom: 16px">
+          <button class="btn btn-outline-primary align-self-start" style="float:left;" @click="saveData">Save</button>
+        </div>
+        <div class="col-md-auto" style="padding-left: 0">
+          <div class="custom-file" style="max-width: 170px; float:left;">
+            <input type="file" class="custom-file-input"  style="margin-top: 8px" @change="loadBudget">
+            <label class="custom-file-label" style="margin-right: -70px; padding-left: 0">Select file</label>
+          </div>
+        </div>
       </div>
     </div>
   </div>
