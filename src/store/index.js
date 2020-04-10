@@ -12,6 +12,8 @@ export default new Vuex.Store({
             },
             rolesObject: {
             },
+            fixedCostsObject: {
+            },
             pointHour: 0,
             hourError: 0.0,
             hourManagement: 0.0,
@@ -40,6 +42,9 @@ export default new Vuex.Store({
         getAllData: state => {
             return state.budget;
         },
+        getFixedCostObject: state => {
+            return state.budget.fixedCostsObject;
+        }
     },
     mutations: {
         removeRole (state, index){
@@ -63,9 +68,22 @@ export default new Vuex.Store({
         },
         updateBudget(state, functionalitiesObject){
             state.budget.functionalitiesObject = functionalitiesObject;
+            if(state.budget.fixedCostsObject.cost !== undefined){
+                state.budget.totalCost = state.budget.functionalitiesObject.totalCost + state.budget.fixedCostsObject.cost;
+            } else {
+                state.budget.totalCost = state.budget.functionalitiesObject.totalCost;
+            }
         },
         uploadNewBudget(state, budget){
             state.budget = budget;
+        },
+        updateFixedCosts(state, fixedCostObject){
+            state.budget.fixedCostsObject = fixedCostObject;
+            if(state.budget.functionalitiesObject.totalCost !== undefined){
+                state.budget.totalCost = state.budget.functionalitiesObject.totalCost + state.budget.fixedCostsObject.cost;
+            } else {
+                state.budget.totalCost = state.budget.fixedCostsObject.cost;
+            }
         }
     },
     actions: {}

@@ -1,5 +1,7 @@
 <template>
     <div>
+        <!--
+        <p style="text-align: left; margin-left: 55px">Functionalities</p> -->
         <Functionality v-for="(functionality, index) in functionalitiesObject.functionalities" :key="functionality.id" :functionality="functionality" :findex="index" @functionality="updateFunctionality" @remove="removeFunctionality"/>
         <div>
             <button type="button" class="btn btn-outline-primary float-left add-button" @click="addFunctionality">
@@ -77,7 +79,6 @@
         created(){
             this.$store.subscribe((mutation, state) => {
                 if (mutation.type === "uploadNewBudget") {
-                    this.functionalitiesObject = null;
                     this.functionalitiesObject = state.budget.functionalitiesObject;
                 }
             });

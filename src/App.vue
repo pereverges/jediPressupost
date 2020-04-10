@@ -4,6 +4,9 @@
     <div style="float: left; width: 100%;  margin-left: 18px;">
       <FunctionalityHolder/>
     </div>
+    <div style="float: left; width: 100%;  margin-left: 18px;">
+      <FixedCostsHolder/>
+    </div>
     <div class="container" style="float: left; margin-top:30px; margin-left: 22px;">
       <div class="row">
         <Parameters class="align-self-start col-md-auto"  style="margin-right: 12px"/>
@@ -29,7 +32,7 @@ import FunctionalityHolder from "@/components/FunctionalityHolder";
 import Parameters from "@/components/Parameters/Parameters";
 import Result from "@/components/Parameters/Result";
 import Roles from "@/components/Parameters/Roles";
-
+import FixedCostsHolder from "@/components/FixedCosts/FixedCostsHolder";
 
 export default {
   name: 'App',
@@ -38,7 +41,8 @@ export default {
     Parameters,
     Header,
     FunctionalityHolder,
-    Roles
+    Roles,
+    FixedCostsHolder
   },
   data(){
     return{
@@ -60,8 +64,12 @@ export default {
       const file = event.target.files[0];
       const reader = new FileReader();
 
-      reader.onload = ev => this.$store.commit('uploadNewBudget',  JSON.parse(ev.target.result));
+      reader.onload = ev => {
+        this.$store.commit('uploadNewBudget',  JSON.parse(ev.target.result));
+        this.budget = JSON.parse(ev.target.result);
+      }
       reader.readAsText(file);
+
     }
   }
 }
