@@ -20,6 +20,14 @@
                 <input type="number" size="5" step=0.5 class="form-control" min="0" max=99 placeholder="10" value="role.price" required @change="addRole" v-model="role.price">
             </div>
         </div>
+        <div class="list-group-item d-flex flex-row" style="justify-content: space-between; border-bottom: 1px solid black">
+            <div style="margin-top: 6px;">
+                <label>Earnings</label>
+            </div>
+            <div style="margin-right: 8px; margin-top: 8px; margin-bottom: -8px">
+                <p>{{role.earnings}}</p>
+            </div>
+        </div>
     </div>
 </template>
 

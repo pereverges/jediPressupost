@@ -35,7 +35,8 @@
                 this.rolesObject.roles.push({
                     id: this.rolesObject.count,
                     name: "",
-                    price: 0
+                    price: 0,
+                    earnings: 0
                 });
                 this.rolesObject.count += 1;
                 this.updateRoleObject();

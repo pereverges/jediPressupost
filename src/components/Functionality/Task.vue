@@ -22,7 +22,7 @@
                 </p>
             </div>
             <div>
-                <Roles class="margin" :tindex="index" :findex="this.findex" @updateRolesObject="updateRolesObject"/>
+                <Roles class="margin" :tindex="index" :findex="this.findex" :task="this.task" @updateRolesObject="updateRolesObject"/>
             </div>
             <div class="margin" style="max-width: 80px; min-width: 80px">
                 <label v-if="!index">Cost</label>
@@ -118,6 +118,8 @@
 <style scoped>
 .margin{
     margin: 4px;
+    margin-bottom: 0px;
+    margin-top: 0px;
 }
 .marginFirst{
     margin-top: 36px;

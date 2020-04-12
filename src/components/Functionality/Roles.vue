@@ -16,7 +16,7 @@
     import ResizeText from 'vue-resize-text'
     export default {
         name: "Roles",
-        props: ["tindex","findex"],
+        props: ["tindex","findex","task"],
         directives: {
             ResizeText
         },
@@ -39,11 +39,26 @@
                         totalWeights = 1;
                     }
                     let i;
+                    this.getRoles();
                     for(i = 0; i < this.rolesObject.length; ++i){
-                        costHour += this.roles[i].price*(this.rolesObject[i].weight/totalWeights);
+                        let lastEarning = this.rolesObject[i].earning;
+                        let newEarning = this.roles[i].price*(this.rolesObject[i].weight/totalWeights);
+                        let realNewEarning = this.task.cost = Math.round((newEarning*this.task.hours + Number.EPSILON)*100)/100;
+                        this.rolesObject[i].earning = realNewEarning;
+                        this.roles[i].earnings = Math.round((this.roles[i].earnings+(realNewEarning-lastEarning) + Number.EPSILON)*100)/100;
+                        this.updateRole(i)
+
+                        costHour += newEarning;
                     }
                 }
                 this.$emit('updateRolesObject', {'roles': this.rolesObject, 'costHour': costHour});
+            },
+            updateRole(index){
+                let payload = {'index': index, 'role': this.roles[index]};
+                this.$store.commit("updateRoleEarning", payload);
+            },
+            getRoles(){
+                this.roles = this.$store.getters.getRoles;
             }
         },
         mounted(){
@@ -65,7 +80,8 @@
                 this.rolesObject.push({
                     name: this.roles[i].name,
                     index: i,
-                    weight: 0
+                    weight: 0,
+                    earning: 0
                 })
             }
             this.updateRoleObject();
@@ -80,7 +96,8 @@
                             this.rolesObject.push({
                                 name: this.roles[index].name,
                                 index: index,
-                                weight: 0
+                                weight: 0,
+                                earning: 0
                             });
                         } else {
                             let i;

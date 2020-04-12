@@ -54,6 +54,9 @@ export default new Vuex.Store({
         updateRole (state, payload){
             state.budget.rolesObject.roles.splice(payload.index,1,payload.role);
         },
+        updateRoleEarning (state, payload){
+            state.budget.rolesObject.roles.splice(payload.index,1,payload.role);
+        },
         updateRoleObject(state, rolesObject) {
             state.budget.rolesObject = rolesObject;
         },
