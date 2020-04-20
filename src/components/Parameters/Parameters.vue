@@ -27,6 +27,22 @@
                         <input type="number" size="5" step="0.025" class="form-control" min="0" max="99" v-model="hourManagement" value="hourManagement" @change="setHourManagement">
                     </div>
                 </div>
+                <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
+                    <div style="margin-top: 6px;">
+                        <label>Taxes</label>
+                    </div>
+                    <div style="margin-left: 12px;" class="float-right">
+                        <input type="number" size="5" step="0.5" class="form-control" min="0" max="99" v-model="taxesCost" value="taxesCost" @change="setTaxesCost">
+                    </div>
+                </div>
+                <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
+                    <div style="margin-top: 6px;">
+                        <label>Jedi tax</label>
+                    </div>
+                    <div style="margin-left: 12px;" class="float-right">
+                        <input type="number" size="5" step="0.5" class="form-control" min="0" max="99" v-model="jediTax" value="jediTax" @change="setJediTax">
+                    </div>
+                </div>
             </div>
         </div>
     </div>
@@ -40,6 +56,8 @@
                 pointHour: 0,
                 hourError: 0.0,
                 hourManagement: 0.0,
+                jediTax: 0.0,
+                taxesCost: 0.0
             }
         },
         methods: {
@@ -52,10 +70,18 @@
             setHourManagement(){
                 this.$store.commit("setHourManagement", this.hourManagement);
             },
+            setTaxesCost(){
+                this.$store.commit("setTaxesCost", this.taxesCost);
+            },
+            setJediTax(){
+                this.$store.commit("setJediTax", this.jediTax);
+            },
             updateParameters(){
                 this.setPointHour();
                 this.setHourError();
                 this.setHourManagement();
+                this.setTaxesCost();
+                this.setJediTax();
             }
         },
         created(){
@@ -65,6 +91,8 @@
                         this.pointHour = state.budget.pointHour;
                         this.hourError = state.budget.hourError;
                         this.hourManagement = state.budget.hourManagement;
+                        this.jediTax = state.budget.jediTax;
+                        this.taxesCost = state.budget.taxesCost;
                         this.updateParameters();
                     }
                 }

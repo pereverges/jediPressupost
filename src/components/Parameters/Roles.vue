@@ -47,7 +47,7 @@
         },
         created(){
             this.$store.subscribe((mutation, state) => {
-                if (mutation.type === "uploadNewBudget") {
+                if (mutation.type === "uploadNewBudget" ) {
                     if (state.budget != null) {
                         this.rolesObject = state.budget.rolesObject
                     }

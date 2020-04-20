@@ -12,7 +12,7 @@
                 </div>
             </div>
         </div>
-        <div class="list-group-item d-flex flex-row" style="justify-content: space-between; border-bottom: 1px solid black">
+        <div class="list-group-item d-flex flex-row" style="justify-content: space-between;">
             <div style="margin-top: 6px;">
                 <label>Price/Hour</label>
             </div>
@@ -25,7 +25,7 @@
                 <label>Earnings</label>
             </div>
             <div style="margin-right: 8px; margin-top: 8px; margin-bottom: -8px">
-                <p>{{role.earnings}}</p>
+                <p>{{realEarnings}}</p>
             </div>
         </div>
     </div>
@@ -37,6 +37,8 @@
         name: "Role",
         data(){
             return{
+                taxesCost: 0,
+                jediTax: 0
             }
         },
         methods: {
@@ -51,6 +53,20 @@
                     this.$emit('remove', this.index);
                     this.$store.commit("removeRole", this.index);
                 }
+            }
+        },
+        created(){
+            this.$store.subscribe((mutation, state) => {
+                if (mutation.type === "setTaxesCost" || mutation.type === "setJediTax" || mutation.type === "updateRole" || mutation.type === "setPointHour" || mutation.type === "setHourError" || mutation.type === "setHourManagement" || mutation.type === "updateRolesObject" || mutation.type === "updateRoleEarning" || mutation.type === "updateBudget") {
+                    this.taxesCost = state.budget.taxesCost;
+                    this.jediTax = state.budget.jediTax;
+                }
+            });
+        },
+        computed: {
+            realEarnings: function () {
+                return Math.round(((this.role.earnings-(this.role.earnings*(this.taxesCost/100)))-((this.role.earnings-(this.role.earnings*(this.taxesCost/100)))*(this.jediTax/100)))*100)/100;
+
             }
         }
     }

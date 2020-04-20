@@ -14,6 +14,8 @@
     "bootstrap": "^4.4.1",
     "core-js": "^3.6.4",
     "font-awesome": "^4.7.0",
+    "jquery": "^3.5.0",
+    "popper.js": "^1.16.1",
     "vue": "^2.6.11",
     "vue-json-csv": "^1.2.11",
     "vue-resize-text": "^0.1.1"

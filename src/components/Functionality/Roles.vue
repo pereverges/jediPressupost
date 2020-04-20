@@ -124,6 +124,8 @@
                         }
                     }
                     this.updateRoleObject();
+                } else if(mutation.type === "setTaxesCost" || mutation.type === "setJediTax" || mutation.type === "updateRole" || mutation.type === "setPointHour" || mutation.type === "setHourError" || mutation.type === "setHourManagement" || mutation.type === "refreshRole"){
+                    this.updateRoleObject();
                 }
             })
         }

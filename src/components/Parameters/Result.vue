@@ -5,6 +5,14 @@
             <div class="list-group list-group-flush" >
                 <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
                     <div style="margin-top: 6px;">
+                        <label style="font-weight: bold">Net cost</label>
+                    </div>
+                    <div style="margin-left: 12px">
+                        <p style="margin: 6px">{{netCost}}</p>
+                    </div>
+                </div>
+                <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
+                    <div style="margin-top: 6px;">
                         <label style="font-weight: bold">Total cost</label>
                     </div>
                     <div style="margin-left: 12px">
@@ -47,6 +55,7 @@
             return{
                 totalHours: 0,
                 totalCost: 0,
+                netCost: 0,
                 fixedCost: 0,
                 functionalitiesCost: 0
             }
@@ -58,11 +67,13 @@
             }
             if(budget.totalCost != null){
                 this.totalCost = budget.totalCost;
+                let net = this.totalCost-(this.totalCost*(budget.taxesCost/100));
+                this.netCost = Math.round((net-(net*(budget.jediTax/100)))*100)/100;
             }
         },
         created(){
             this.$store.subscribe((mutation, state) => {
-                if (mutation.type === "updateBudget" || mutation.type === "uploadNewBudget" || mutation.type === "updateFixedCosts") {
+                if (mutation.type === "updateBudget" || mutation.type === "uploadNewBudget" || mutation.type === "updateFixedCosts" || mutation.type === "setJediTax" || mutation.type === "setTaxesCost") {
                     let budget = state.budget.functionalitiesObject;
                     if(budget.totalHours != null){
                         this.totalHours = budget.totalHours;
@@ -75,6 +86,8 @@
                     }
                     this.totalCost = state.budget.totalCost;
 
+                    let net = this.totalCost-(this.totalCost*(state.budget.taxesCost/100));
+                    this.netCost = Math.round((net-(net*(state.budget.jediTax/100)))*100)/100;
                 }
             });
         }

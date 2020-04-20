@@ -18,6 +18,8 @@ export default new Vuex.Store({
             hourError: 0.0,
             hourManagement: 0.0,
             totalCost: 0,
+            jediTax: 0,
+            taxesCost: 0,
             totalHours: 0,
             lastRoleRemoved: null
         },
@@ -60,6 +62,9 @@ export default new Vuex.Store({
         updateRoleObject(state, rolesObject) {
             state.budget.rolesObject = rolesObject;
         },
+        refreshRole(state){
+            console.log(state);
+        },
         setPointHour(state, pointHour){
             state.budget.pointHour = pointHour;
         },
@@ -68,6 +73,12 @@ export default new Vuex.Store({
         },
         setHourManagement(state, hourManagement){
             state.budget.hourManagement = hourManagement
+        },
+        setTaxesCost(state, taxesCost){
+            state.budget.taxesCost = taxesCost;
+        },
+        setJediTax(state, jediTax){
+            state.budget.jediTax = jediTax;
         },
         updateBudget(state, functionalitiesObject){
             state.budget.functionalitiesObject = functionalitiesObject;

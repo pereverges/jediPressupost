@@ -1,7 +1,7 @@
 <template>
   <div>
     <header>
-      <h2>JediPressuposts</h2>
+      <img src="../assets/logo-jedi.png" height="100px">
     </header>
   </div>
 </template>

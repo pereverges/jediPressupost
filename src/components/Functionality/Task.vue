@@ -70,10 +70,12 @@
                 if(this.task.hours != null){
                     this.task.cost = Math.round((this.costHour*this.task.hours + Number.EPSILON)*100)/100;
                 }
+                this.$store.commit("refreshRole");
 
                 this.updateTask();
             },
             updateTask(){
+
                 this.$emit('task', this.task);
             }
         },
