@@ -14,6 +14,7 @@ export default new Vuex.Store({
             },
             fixedCostsObject: {
             },
+            budgetName: "",
             pointHour: 0,
             hourError: 0.0,
             hourManagement: 0.0,
@@ -98,6 +99,9 @@ export default new Vuex.Store({
             } else {
                 state.budget.totalCost = state.budget.fixedCostsObject.cost;
             }
+        },
+        updateBudgetName(state, budgetName){
+            state.budget.budgetName = budgetName;
         }
     },
     actions: {}

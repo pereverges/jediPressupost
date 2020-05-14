@@ -1,6 +1,10 @@
 <template>
   <div id="app" style="min-width: 650px">
     <Header msg="Welcome to Your Vue.js App"/>
+    <div style="float: left; width: 100%;  padding-left: 22px; padding-right: 10px; margin-bottom: 12px">
+      <input type="text" class="form-control " placeholder="Budget name"
+             v-model="budgetName" value="budgetName" @change="updateBudgetName"/>
+    </div>
     <div style="float: left; width: 100%;  margin-left: 18px;">
       <FunctionalityHolder/>
     </div>
@@ -50,10 +54,14 @@ export default {
   },
   data(){
     return{
-      budget: {}
+      budget: {},
+      budgetName: ""
     }
   },
   methods: {
+    updateBudgetName(){
+      this.$store.commit("updateBudgetName", this.budgetName);
+    },
     saveData(){
       this.budget = this.$store.getters.getAllData;
       let dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(JSON.stringify(this.budget, null, 2));
@@ -68,11 +76,11 @@ export default {
       let budget = this.$store.getters.getAllData;
       let doc = new jsPDF();
       let pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
-      let y = 30;
+      let y = 20;
       let x = 10;
       doc.setFontSize(28);
       doc.setFontStyle('bold');
-      doc.text("Pressupost", x, y);
+      doc.text(budget.budgetName, x, y);
       y += 15;
       console.log(budget.functionalitiesObject.functionalities.length);
       let i = 0;
