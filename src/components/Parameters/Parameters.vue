@@ -8,7 +8,7 @@
                         <label>Point/Hour</label>
                     </div>
                     <div style="margin-left: 12px">
-                        <input type="number" size="5" step="0.05" class="form-control" min="0" max="99" v-model="pointHour" value="pointHour" @change="setPointHour">
+                        <input type="number" required placeholder="1.5" size="5" step="0.05" class="form-control" min="0" max="99" v-model="pointHour" value="pointHour" @change="setPointHour">
                     </div>
                 </div>
                 <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
@@ -16,7 +16,7 @@
                         <label>Hour/Error</label>
                     </div>
                     <div style="margin-left: 12px">
-                        <input type="number" size="5" step="0.05" class="form-control" min="0" max="99" v-model="hourError" value="hourError" @change="setHourError">
+                        <input type="number" required size="5" placeholder="0.2"  step="0.05" class="form-control" min="0" max="99" v-model="hourError" value="hourError" @change="setHourError">
                     </div>
                 </div>
                 <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
@@ -24,7 +24,7 @@
                         <label>Hour/Management</label>
                     </div>
                     <div style="margin-left: 12px;" class="float-right">
-                        <input type="number" size="5" step="0.025" class="form-control" min="0" max="99" v-model="hourManagement" value="hourManagement" @change="setHourManagement">
+                        <input type="number" required size="5" placeholder="0.1" step="0.025" class="form-control" min="0" max="99" v-model="hourManagement" value="hourManagement" @change="setHourManagement">
                     </div>
                 </div>
                 <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
@@ -32,7 +32,7 @@
                         <label>Taxes</label>
                     </div>
                     <div style="margin-left: 12px;" class="float-right">
-                        <input type="number" size="5" step="0.5" class="form-control" min="0" max="99" v-model="taxesCost" value="taxesCost" @change="setTaxesCost">
+                        <input type="number" required placeholder="21" size="5" step="0.5" class="form-control" min="0" max="99" v-model="taxesCost" value="taxesCost" @change="setTaxesCost">
                     </div>
                 </div>
                 <div class="list-group-item d-flex flex-row" style="justify-content: space-between">
@@ -40,7 +40,7 @@
                         <label>Jedi tax</label>
                     </div>
                     <div style="margin-left: 12px;" class="float-right">
-                        <input type="number" size="5" step="0.5" class="form-control" min="0" max="99" v-model="jediTax" value="jediTax" @change="setJediTax">
+                        <input type="number" required placeholder="5" size="5" step="0.5" class="form-control" min="0" max="99" v-model="jediTax" value="jediTax" @change="setJediTax">
                     </div>
                 </div>
             </div>
@@ -53,11 +53,11 @@
         name: "Parameters",
         data(){
             return{
-                pointHour: 0,
-                hourError: 0.0,
-                hourManagement: 0.0,
-                jediTax: 0.0,
-                taxesCost: 0.0
+                pointHour: null,
+                hourError: null,
+                hourManagement: null,
+                jediTax: null,
+                taxesCost: null
             }
         },
         methods: {

@@ -80,7 +80,7 @@
                 this.rolesObject.push({
                     name: this.roles[i].name,
                     index: i,
-                    weight: 0,
+                    weight: this.roles[i].weight,
                     earning: 0
                 })
             }

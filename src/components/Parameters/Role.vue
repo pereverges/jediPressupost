@@ -20,6 +20,14 @@
                 <input type="number" size="5" step=0.5 class="form-control" min="0" max=99 placeholder="10" value="role.price" required @change="addRole" v-model="role.price">
             </div>
         </div>
+        <div class="list-group-item d-flex flex-row" style="justify-content: space-between;">
+            <div style="margin-top: 6px;">
+                <label>Default Weight</label>
+            </div>
+            <div style="margin-left: 12px">
+                <input type="number" size="5" step=1 class="form-control" min="0" max=99 placeholder="1" value="role.weight" required @change="addRole" v-model="role.weight">
+            </div>
+        </div>
         <div class="list-group-item d-flex flex-row" style="justify-content: space-between; border-bottom: 1px solid black">
             <div style="margin-top: 6px;">
                 <label>Earnings</label>

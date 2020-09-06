@@ -36,7 +36,8 @@
                     id: this.rolesObject.count,
                     name: "",
                     price: 0,
-                    earnings: 0
+                    earnings: 0,
+                    weight: 0
                 });
                 this.rolesObject.count += 1;
                 this.updateRoleObject();

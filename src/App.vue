@@ -75,53 +75,84 @@ export default {
     createPdf(){
       let budget = this.$store.getters.getAllData;
       let doc = new jsPDF();
+      // eslint-disable-next-line no-unused-vars
+      let pageHeight = doc.internal.pageSize.getHeight();
       let pageWidth = doc.internal.pageSize.width || doc.internal.pageSize.getWidth();
       let y = 20;
       let x = 10;
-      doc.setFontSize(28);
+      doc.setFontSize(24);
+      doc.setTextColor("#4972b1");
       doc.setFontStyle('bold');
       doc.text(budget.budgetName, x, y);
       y += 15;
+      doc.setTextColor("#000000");
       console.log(budget.functionalitiesObject.functionalities.length);
       let i = 0;
       while (i < budget.functionalitiesObject.functionalities.length){
         doc.setFontStyle('bold');
-        doc.setFontSize(16);
+        doc.setFontSize(12);
         x = 10;
-        doc.text(budget.functionalitiesObject.functionalities[i].name, x, y);
+        doc.text(budget.functionalitiesObject.functionalities[i].name, x, y, {maxWidth: pageWidth-40-doc.getTextWidth(budget.functionalitiesObject.functionalities[i].cost.toString())});
         doc.text(budget.functionalitiesObject.functionalities[i].cost.toString(), pageWidth-10, y, 'right');
+        if(doc.getTextWidth(budget.functionalitiesObject.functionalities[i].name) > pageWidth-40-20){
+          y += 4;
+        }
         y += 8;
+        if (y >= pageHeight){
+          doc.addPage();
+          y = 20;
+        }
         let j = 0;
         x = 20;
-        doc.setFontSize(12);
+        doc.setFontSize(10);
         doc.setFontStyle('normal');
         while(j < budget.functionalitiesObject.functionalities[i].tasks.length){
-          doc.text("- " + budget.functionalitiesObject.functionalities[i].tasks[j].name, x, y);
-          y += 8;
+          doc.text("- " + budget.functionalitiesObject.functionalities[i].tasks[j].name, x, y, {maxWidth: pageWidth-40});
+          if(doc.getTextWidth(budget.functionalitiesObject.functionalities[i].tasks[j].name) > pageWidth-40-20){
+            y += 4;
+          }
+          y += 4;
+          if (y >= pageHeight-10){
+            doc.addPage();
+            y = 20;
+          }
           j = j+1;
         }
+        y += 4;
         i = i+1;
       }
       let k = 0;
       if(budget.fixedCostsObject.fixedCosts !== undefined) {
         while (k < budget.fixedCostsObject.fixedCosts.length) {
           doc.setFontStyle('bold');
-          doc.setFontSize(16);
+          doc.setFontSize(12);
           x = 10;
           doc.text(budget.fixedCostsObject.fixedCosts[k].name, x, y);
           doc.text(budget.fixedCostsObject.fixedCosts[k].cost.toString(), pageWidth - 10, y, 'right');
           y += 8;
+          if (y >= pageHeight){
+            doc.addPage();
+            y = 20;
+          }
           k += 1;
         }
       }
       x = 10;
       doc.setFontStyle('bold');
-      doc.setFontSize(16);
+      doc.setFontSize(12);
       doc.line(10,y,pageWidth-10,y);
       y += 12;
+      if (y >= pageHeight){
+        doc.addPage();
+        y = 20;
+      }
       doc.text("Total cost", x, y);
       doc.text(budget.totalCost.toString(), pageWidth-10,y, 'right');
-      y += 10;
+      y += 6;
+      if (y >= pageHeight){
+        doc.addPage();
+        y = 20;
+      }
       doc.text("Total hours", x, y);
       doc.text(budget.totalCost.toString(), pageWidth-10,y, 'right');
 
