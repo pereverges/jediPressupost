@@ -73,8 +73,8 @@
         },
         computed: {
             realEarnings: function () {
-                return Math.round(((this.role.earnings-(this.role.earnings*(this.taxesCost/100)))-((this.role.earnings-(this.role.earnings*(this.taxesCost/100)))*(this.jediTax/100)))*100)/100;
-
+                // return Math.round(((this.role.earnings-(this.role.earnings*(this.taxesCost/100)))-((this.role.earnings-(this.role.earnings*(this.taxesCost/100)))*(this.jediTax/100)))*100)/100;
+                return Math.round(this.role.earnings);
             }
         }
     }

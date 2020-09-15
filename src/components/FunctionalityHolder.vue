@@ -68,7 +68,7 @@
                 for (i = 0; i < this.functionalitiesObject.functionalities.length; i++){
                     this.functionalitiesObject.totalCost += this.functionalitiesObject.functionalities[i].cost;
                 }
-                this.functionalitiesObject.totalCost = Math.round((this.functionalitiesObject.totalCost + Number.EPSILON)*100)/100;
+                this.functionalitiesObject.totalCost = Math.round((this.functionalitiesObject.totalCost));
 
                 this.updateFunctionalitiesObject()
             },

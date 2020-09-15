@@ -41,6 +41,7 @@
         },
         data(){
             return{
+              jediTax: 0
             }
         },
         methods: {
@@ -86,7 +87,9 @@
                 for (i = 0; i < this.functionality.tasks.length; i++){
                     this.functionality.cost += this.functionality.tasks[i].cost;
                 }
-                this.functionality.cost = Math.round((this.functionality.cost + Number.EPSILON)*100)/100;
+                let jediTax = this.$store.getters.getJediTax;
+                this.functionality.cost = Math.round(this.functionality.cost + ((this.functionality.cost)*(jediTax/100)));
+                // this.functionality.cost = Math.round(this.functionality.cost);
 
                 this.updateFunctionality();
             },

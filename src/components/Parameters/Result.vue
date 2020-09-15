@@ -62,13 +62,18 @@
         },
         mounted(){
             let budget = this.$store.getters.getBudget;
+            console.log(budget);
             if(budget.totalHours != null){
                 this.totalHours = budget.totalHours;
             }
             if(budget.totalCost != null){
                 this.totalCost = budget.totalCost;
-                let net = this.totalCost-(this.totalCost*(budget.taxesCost/100));
-                this.netCost = Math.round((net-(net*(budget.jediTax/100)))*100)/100;
+                //let net = this.totalCost+(this.totalCost*(budget.taxesCost/100));
+                // this.netCost = Math.round((net+(net*(budget.jediTax/100)))*100)/100;
+                // this.netCost = Math.round((this.totalCost-(this.totalCost*(budget.jediTax/100)))*100)/100
+                let jediTaxes = (this.totalCost*(budget.jediTax/100))
+                this.netCost = Math.round((this.totalCost-jediTaxes)*100)/100;
+
             }
         },
         created(){
@@ -84,10 +89,12 @@
                     if(state.budget.functionalitiesObject.totalCost !== null && state.budget.functionalitiesObject.totalCost !== undefined){
                         this.functionalitiesCost = state.budget.functionalitiesObject.totalCost;
                     }
-                    this.totalCost = state.budget.totalCost;
+                    this.totalCost = Math.round(state.budget.totalCost + (state.budget.totalCost * (state.budget.taxesCost/100)));
 
-                    let net = this.totalCost-(this.totalCost*(state.budget.taxesCost/100));
-                    this.netCost = Math.round((net-(net*(state.budget.jediTax/100)))*100)/100;
+                    // this.netCost = Math.round(state.budget.totalCost);
+                    // let net = this.totalCost+(this.totalCost*(state.budget.taxesCost/100));
+                    // this.netCost = Math.round((net+(net*(state.budget.jediTax/100)))*100)/100;
+                    this.netCost = Math.round((state.budget.totalCost/(1+(state.budget.jediTax/100))));
                 }
             });
         }

@@ -47,6 +47,9 @@ export default new Vuex.Store({
         },
         getFixedCostObject: state => {
             return state.budget.fixedCostsObject;
+        },
+        getJediTax: state => {
+            return state.budget.jediTax;
         }
     },
     mutations: {

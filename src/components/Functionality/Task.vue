@@ -105,11 +105,11 @@
                 } else if(mutation.type === "setHourManagement"){
                     this.hourManagement = state.budget.hourManagement;
                     this.updateHours();
-                } else if(mutation.type === "updateRole" || mutation.type === "uploadNewBudget"){
-                    if(state.budget.roles != null){
-                        this.roles = state.budget.roles;
-                    } else{
-                        this.roles = [];
+                } else if(mutation.type === "updateRole" || mutation.type === "uploadNewBudget") {
+                    if (state.budget.roles != null) {
+                      this.roles = state.budget.roles;
+                    } else {
+                      this.roles = [];
                     }
                 }
             })
