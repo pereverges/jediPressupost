@@ -62,7 +62,6 @@
         },
         mounted(){
             let budget = this.$store.getters.getBudget;
-            console.log(budget);
             if(budget.totalHours != null){
                 this.totalHours = budget.totalHours;
             }

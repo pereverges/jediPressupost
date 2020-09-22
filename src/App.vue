@@ -86,7 +86,6 @@ export default {
       doc.text(budget.budgetName, x, y);
       y += 15;
       doc.setTextColor("#000000");
-      console.log(budget.functionalitiesObject.functionalities.length);
       let i = 0;
       while (i < budget.functionalitiesObject.functionalities.length){
         doc.setFontStyle('bold');

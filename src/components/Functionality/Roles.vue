@@ -4,7 +4,7 @@
             <div v-for="(role, index) in this.roles" class="col-md-auto" style="padding-left: 4px; padding-right: 4px" :key="index">
                 <div class="marginLeft input_width text-wrap" style="padding-bottom: 2px">
                     <label class="input_width text-wrap" style="overflow: hidden; font-size: 12px; padding-top: 2px;" v-if="!tindex" v-bind:class="{'marginFirst' : !role.name.length}">{{role.name}}</label>
-                    <input type="number" size="2" class="form-control" min="0" max="99" placeholder="0" @change="updateRoleObject"
+                    <input type="number" size="2" class="form-control" min="0" max="99" placeholder="0" @change="updateRoleObject(true)"
                            v-model="rolesObject[index].weight" value="rolesObject[index].weight">
                 </div>
             </div>
@@ -27,7 +27,10 @@
             }
         },
         methods: {
-            updateRoleObject(){
+            updateRoleObject(zero=true){
+                if (zero !== true) {
+                  this.task.hours = 0;
+                }
                 let costHour = 0;
                 if (this.roles.length === this.rolesObject.length){
                     let j;
@@ -46,8 +49,7 @@
                         let realNewEarning = this.task.cost = Math.round((newEarning*this.task.hours + Number.EPSILON)*100)/100;
                         this.rolesObject[i].earning = realNewEarning;
                         this.roles[i].earnings = Math.round((this.roles[i].earnings+(realNewEarning-lastEarning) + Number.EPSILON)*100)/100;
-                        this.updateRole(i)
-
+                        this.updateRole(i);
                         costHour += newEarning;
                     }
                 }

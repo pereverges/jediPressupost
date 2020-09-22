@@ -20,7 +20,7 @@
         </div>
 
         <div class="taskHolder">
-            <Task v-for="(task, index) in functionality.tasks" :key="task.id" :findex="findex" :index="index" :task="task" @task="updateTask" @remove="removeTask"/>
+            <Task v-for="(task, index) in functionality.tasks" ref="delTasks" :key="task.id" :findex="findex" :index="index" :task="task" @task="updateTask" @remove="removeTask"/>
             <div>
                 <button type="button" class="btn btn-outline-success float-left add-button" @click="addTask">
                     <font-awesome-icon  icon="plus"/>
@@ -51,6 +51,9 @@
                 this.newHoursCompute();
             },
             removeFunctionality(){
+                for (let i = 0; i < this.functionality.tasks.length; i++){
+                  this.$refs.delTasks[i].removeTask();
+                }
                 this.$emit('remove', this.findex);
             },
             addTask(){

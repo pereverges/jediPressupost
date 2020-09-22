@@ -22,7 +22,7 @@
                 </p>
             </div>
             <div>
-                <Roles class="margin" :tindex="index" :findex="this.findex" :task="this.task" @updateRolesObject="updateRolesObject"/>
+                <Roles class="margin" ref="rolesRem" :tindex="index" :findex="this.findex" :task="this.task" @updateRolesObject="updateRolesObject"/>
             </div>
             <div class="margin" style="max-width: 80px; min-width: 80px">
                 <label v-if="!index">Cost</label>
@@ -53,6 +53,7 @@
         },
         methods: {
             removeTask(){
+                this.$refs.rolesRem.updateRoleObject(false);
                 this.$emit('remove', this.index);
             },
             updateRolesObject(parameters) {
