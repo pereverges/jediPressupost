@@ -22,7 +22,7 @@
         </div>
         <div class="list-group-item d-flex flex-row" style="justify-content: space-between;">
             <div style="margin-top: 6px;">
-                <label>Default Weight</label>
+                <button class="btn btn-secondary btn-sm"  @click="addRoleWeight">Default Weight</button>
             </div>
             <div style="margin-left: 12px">
                 <input type="number" size="5" step=1 class="form-control" min="0" max=99 placeholder="1" value="role.weight" required @change="addRole" v-model="role.weight">
@@ -61,7 +61,13 @@
                     this.$emit('remove', this.index);
                     this.$store.commit("removeRole", this.index);
                 }
+            },
+          addRoleWeight(){
+            if(this.role.name.length !== 0){
+              let payload = {'index': this.index, 'role': this.role};
+              this.$store.commit("updateRoleWeight", payload);
             }
+          }
         },
         created(){
             this.$store.subscribe((mutation, state) => {

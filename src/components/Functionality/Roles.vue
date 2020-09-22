@@ -129,6 +129,11 @@
                 } else if(mutation.type === "setTaxesCost" || mutation.type === "setJediTax" || mutation.type === "updateRole" || mutation.type === "setPointHour" || mutation.type === "setHourError" || mutation.type === "setHourManagement" || mutation.type === "refreshRole"){
                     this.updateRoleObject();
                 }
+                else if(mutation.type === "updateRoleWeight"){
+                  for (let i = 0; i < this.roles.length; i++){
+                    this.rolesObject[i].weight = this.roles[i].weight
+                    }
+                }
             })
         }
     }
