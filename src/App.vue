@@ -146,15 +146,14 @@ export default {
         y = 20;
       }
       doc.text("Total cost", x, y);
-      doc.text(budget.totalCost.toString(), pageWidth-10,y, 'right');
+      doc.text((budget.jediTax*budget.totalCost*0.01+budget.totalCost+budget.taxesCost*budget.totalCost*0.01).toString(), pageWidth-10,y, 'right');
       y += 6;
       if (y >= pageHeight){
         doc.addPage();
         y = 20;
       }
       doc.text("Total hours", x, y);
-      doc.text(budget.totalCost.toString(), pageWidth-10,y, 'right');
-
+      doc.text(this.$store.getters.getBudget.totalHours.toString(), pageWidth-10,y, 'right');
       doc.save('pressupost.pdf');
     },
     loadBudget(event){
