@@ -121,6 +121,7 @@ export default {
         i = i+1;
       }
       let k = 0;
+      let fixedCosts = 0;
       if(budget.fixedCostsObject.fixedCosts !== undefined) {
         while (k < budget.fixedCostsObject.fixedCosts.length) {
           doc.setFontStyle('bold');
@@ -128,6 +129,7 @@ export default {
           x = 10;
           doc.text(budget.fixedCostsObject.fixedCosts[k].name, x, y);
           doc.text(budget.fixedCostsObject.fixedCosts[k].cost.toString(), pageWidth - 10, y, 'right');
+          fixedCosts += parseInt(budget.fixedCostsObject.fixedCosts[k].cost);
           y += 8;
           if (y >= pageHeight){
             doc.addPage();
@@ -146,7 +148,7 @@ export default {
         y = 20;
       }
       doc.text("Total cost", x, y);
-      doc.text((budget.jediTax*budget.totalCost*0.01+budget.totalCost+budget.taxesCost*budget.totalCost*0.01).toString(), pageWidth-10,y, 'right');
+      doc.text(((budget.jediTax*0.01+budget.taxesCost*0.01)* (budget.functionalitiesObject.totalCost+fixedCosts) + (budget.functionalitiesObject.totalCost+fixedCosts)).toString(), pageWidth-10,y, 'right');
       y += 6;
       if (y >= pageHeight){
         doc.addPage();

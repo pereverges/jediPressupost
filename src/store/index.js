@@ -27,6 +27,9 @@ export default new Vuex.Store({
 
     },
     getters: {
+        getFunctionalityCost: state => {
+            return state.budget.functionalitiesObject.totalCost
+        },
         getRoles: state => {
             return state.budget.rolesObject.roles;
         },
