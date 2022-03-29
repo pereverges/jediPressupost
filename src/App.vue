@@ -92,7 +92,8 @@ export default {
         doc.setFontSize(12);
         x = 10;
         doc.text(budget.functionalitiesObject.functionalities[i].name, x, y, {maxWidth: pageWidth-40-doc.getTextWidth(budget.functionalitiesObject.functionalities[i].cost.toString())});
-        doc.text(budget.functionalitiesObject.functionalities[i].cost.toString(), pageWidth-10, y, 'right');
+        doc.text(budget.functionalitiesObject.functionalities[i].cost.toString() + '€', pageWidth-10, y, 'right');
+        doc.text(budget.functionalitiesObject.functionalities[i].hours.toString() + "h", pageWidth-10, y+5, 'right');
         if(doc.getTextWidth(budget.functionalitiesObject.functionalities[i].name) > pageWidth-40-20){
           y += 4;
         }
@@ -128,7 +129,7 @@ export default {
           doc.setFontSize(12);
           x = 10;
           doc.text(budget.fixedCostsObject.fixedCosts[k].name, x, y);
-          doc.text(budget.fixedCostsObject.fixedCosts[k].cost.toString(), pageWidth - 10, y, 'right');
+          doc.text(budget.fixedCostsObject.fixedCosts[k].cost.toString() + "€", pageWidth - 10, y, 'right');
           fixedCosts += parseInt(budget.fixedCostsObject.fixedCosts[k].cost);
           y += 8;
           if (y >= pageHeight){
@@ -148,14 +149,19 @@ export default {
         y = 20;
       }
       doc.text("Total cost", x, y);
-      doc.text(((budget.jediTax*0.01+budget.taxesCost*0.01)* (budget.functionalitiesObject.totalCost+fixedCosts) + (budget.functionalitiesObject.totalCost+fixedCosts)).toString(), pageWidth-10,y, 'right');
+      let totalCost = (budget.functionalitiesObject.totalCost+fixedCosts);
+      let totalTax = totalCost + (totalCost*budget.taxesCost*0.01);
+      let totalTaxNoIRPF = totalTax - (totalTax*0.19);
+      let jediTax = totalTaxNoIRPF*budget.jediTax*0.01;
+      let total = Math.round(totalTax+jediTax);
+      doc.text((total).toString() + '€', pageWidth-10,y, 'right');
       y += 6;
       if (y >= pageHeight){
         doc.addPage();
         y = 20;
       }
       doc.text("Total hours", x, y);
-      doc.text(this.$store.getters.getBudget.totalHours.toString(), pageWidth-10,y, 'right');
+      doc.text(this.$store.getters.getBudget.totalHours.toString() + "h", pageWidth-10,y, 'right');
       doc.save('pressupost.pdf');
     },
     loadBudget(event){

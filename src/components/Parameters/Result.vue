@@ -90,6 +90,11 @@
                     }
                     this.totalCost = Math.round(state.budget.totalCost + (state.budget.totalCost * (state.budget.taxesCost/100)));
 
+                    let costTotal = (state.budget.totalCost+this.fixedCost);
+                    let totalTax = costTotal + (costTotal*state.budget.taxesCost*0.01);
+                    let totalTaxNoIRPF = totalTax - (totalTax*0.19);
+                    let jediTax = totalTaxNoIRPF*state.budget.jediTax*0.01;
+                    console.log((totalTax+jediTax).toString() + '€');
                     // this.netCost = Math.round(state.budget.totalCost);
                     // let net = this.totalCost+(this.totalCost*(state.budget.taxesCost/100));
                     // this.netCost = Math.round((net+(net*(state.budget.jediTax/100)))*100)/100;
